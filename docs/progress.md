@@ -16,7 +16,7 @@ Plan: user-approved Guide to Finish the Serverless Payroll Activity.
 - [x] Local HTTP tests, PDF visual review, secret/configuration review
 - [x] README, evidence scripts, submission guidance
 - [ ] AWS deployment and live verification (requires credentials and bucket)
-- [ ] GitHub publication (requires destination and authentication)
+- [x] GitHub publication: https://github.com/gab26g/serverless-payroll-api, main branch
 
 ## Verified results
 
@@ -30,3 +30,4 @@ Plan: user-approved Guide to Finish the Serverless Payroll Activity.
 - GitHub destination supplied: https://github.com/gab26g/serverless-payroll-api.git; remote was empty when checked.
 - Ruling: create codex/serverless-payroll-api branch in the existing unborn repository. Publish initial code to the empty destination's main branch; no merge or force push is needed.
 - AWS preflight reports no usable credentials; bucket information still pending. Live upload, deployment and screenshots must not be claimed complete.
+- Published initial commit 5361f9f to origin/main successfully. Local branch codex/serverless-payroll-api tracks origin/main. Tracked, staged and history scans found no secret patterns.

@@ -18,6 +18,8 @@ Date: 2026-10-19. Environment: Windows, PHP 8.2.12, Composer 2.9.5, Node 24.14.1
 | CloudFormation review | Bref PHP 8.2 layer on provided.al2023, timeout 28s, PutObject restricted to bucket/payslips/* |
 | Code review | Independent read-only review found no actionable defects |
 | Source secret-pattern scan | 28 initial untracked submission files scanned with no findings; staged scan repeated before commit |
+| Publication secret scans | 30 staged, tracked and history files/blobs; no pattern findings; ignore rules reviewed |
+| GitHub publication | Initial commit pushed to `gab26g/serverless-payroll-api`, branch `main` |
 
 The compiled AWS manifest is `vendor/aws/aws-sdk-php/src/data/manifest.json.php`; a separate `manifest.json` is not required.
 

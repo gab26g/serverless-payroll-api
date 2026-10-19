@@ -1,6 +1,6 @@
 # Finish the activity
 
-The application and local tests are ready. These steps complete the account-dependent work. Budget **45-75 minutes**, plus any wait for instructor permissions. Do not submit placeholder URLs or local-only results as deployed evidence.
+The application and local tests are ready. The source is published at https://github.com/gab26g/serverless-payroll-api. These steps complete the remaining account-dependent work. Budget **40-65 minutes**, plus any wait for instructor permissions. Do not submit placeholder URLs or local-only results as deployed evidence.
 
 ## 1. Create the bucket (you, 5-10 minutes)
 
@@ -72,14 +72,11 @@ Save these six screenshots under `output/evidence/`:
 
 If a deployed request returns 500: AWS search **Lambda** > **Functions** > function whose name starts with `sam10-payroll-api` > **Monitor** > **View CloudWatch logs** > latest stream. A missing bucket setting, denied PutObject, or incorrect region needs configuration/permission correction and a retry.
 
-## 5. Publish to GitHub (shared, 5-10 minutes)
+## 5. Check GitHub access (you, 2 minutes)
 
-1. Sign in at https://github.com.
-2. Click **+** at upper right > **New repository**.
-3. Set the name to `serverless-payroll-api`. Choose the instructor-required visibility.
-4. Leave **Add a README**, **Add .gitignore**, and **Choose a license** unchecked; the local project supplies its content.
-5. Click **Create repository** and send the repository URL to the assistant. It can check the source for secrets and push once Git authentication is available.
-6. Verify the repository shows `src/`, `index.php`, `serverless.yml`, both CSVs, README, and lockfiles. If private, ensure the instructor can access it.
+Publication is complete: https://github.com/gab26g/serverless-payroll-api, branch `main`.
+
+Open that page and verify it shows `src/`, `index.php`, `serverless.yml`, both CSVs, README, and lockfiles. If private, ensure the instructor can access it. No second repository or new upload is needed.
 
 ## 6. Complete and submit (you, 5-10 minutes)
 
