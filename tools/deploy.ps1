@@ -1,6 +1,6 @@
 param(
     [Parameter(Mandatory=$true)][ValidatePattern('^[a-z0-9][a-z0-9-]{1,61}[a-z0-9]$')][string]$Bucket,
-    [string]$Region = 'us-east-1',
+    [string]$Region = 'ap-southeast-2',
     [string]$Profile = 'payroll-lab',
     [ValidatePattern('^[a-z0-9-]+$')][string]$Stage = 'dev'
 )

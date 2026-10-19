@@ -37,8 +37,9 @@ The compiled AWS manifest is `vendor/aws/aws-sdk-php/src/data/manifest.json.php`
 
 ## Still requires live verification
 
-- AWS STS preflight did not find usable local credentials.
-- Actual S3 bucket name and region confirmation are outstanding.
+- Update: AWS STS preflight now authenticates the saved payroll-lab profile successfully.
+- Update: sam10-payroll-payslips-tabing is verified in ap-southeast-2 with private access, SSE-S3 and ACLs disabled.
+- Deployment access is blocked: read-only CloudFormation ValidateTemplate and API Gateway GetApis probes return access-denied errors. See DEPLOYMENT-STATUS.md.
 - No Lambda/API Gateway deployment, live API URL or successful live S3 upload is claimed.
 - Endpoint screenshots, S3 screenshot, downloaded live PDF screenshot and final course submission remain outstanding.
 

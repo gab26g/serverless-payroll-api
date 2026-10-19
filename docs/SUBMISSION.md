@@ -2,7 +2,7 @@
 
 Repository URL: https://github.com/gab26g/serverless-payroll-api
 
-Deployed API base URL: **PENDING - deployment requires AWS credentials and a real S3 bucket.**
+Deployed API base URL: **PENDING - credentials and the Sydney bucket are verified; professor-approved deployment permissions are still required.**
 
 ## Evidence
 

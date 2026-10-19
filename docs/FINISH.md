@@ -1,11 +1,13 @@
 # Finish the activity
 
-The application and local tests are ready. The source is published at https://github.com/gab26g/serverless-payroll-api. These steps complete the remaining account-dependent work. Budget **40-65 minutes**, plus any wait for instructor permissions. Do not submit placeholder URLs or local-only results as deployed evidence.
+The application and local tests are ready. The source is published at https://github.com/gab26g/serverless-payroll-api. Credentials and the bucket are now verified. Start with the permission blocker in [DEPLOYMENT-STATUS.md](DEPLOYMENT-STATUS.md); steps 1-2 below are reference instructions for work already completed. Budget **25-45 minutes after deployment access is approved**, plus any wait for instructor permissions. Do not submit placeholder URLs or local-only results as deployed evidence.
 
 ## 1. Create the bucket (you, 5-10 minutes)
 
+**Already complete:** `sam10-payroll-payslips-tabing`, **Asia Pacific (Sydney), `ap-southeast-2`**. No second bucket is needed.
+
 1. Sign in at https://408852558600.signin.aws.amazon.com/console using the assigned school login.
-2. Choose your instructor's region in the upper-right Region menu; otherwise choose **US East (N. Virginia)**.
+2. Choose **Asia Pacific (Sydney), ap-southeast-2** in the upper-right Region menu, matching the existing bucket.
 3. In the top search bar, type **S3**, then select **S3**.
 4. Click **General purpose buckets** > **Create bucket**.
 5. Use a globally unique lowercase name, for example `sam10-payroll-payslips-20261019`, adding digits if already taken.
@@ -13,6 +15,8 @@ The application and local tests are ready. The source is published at https://gi
 7. Click **Create bucket**. Record the exact name and region; these are safe to share with the coding assistant.
 
 ## 2. Configure credentials privately (you, 10-15 minutes)
+
+**Already complete:** the `payroll-lab` profile authenticates successfully as `gab-payroll-deployer`. Do not create another key or rerun the helper for the same profile.
 
 1. In AWS, click your username/account menu at the upper right > **Security credentials**.
 2. Scroll to **Access keys** > **Create access key** and follow the command-line use-case prompts. If blocked, request the approved credentials or deployment method from your instructor; keep existing keys.
@@ -25,10 +29,10 @@ Credentials are written outside the repository, under your user profile. Do not 
 
 ## 3. Deploy (assistant or you, 10-20 minutes)
 
-Tell the assistant the bucket name, region, and that the local profile is ready. It can continue deployment and diagnose errors. Or run:
+First obtain the professor-approved deployment access described in DEPLOYMENT-STATUS.md. The bucket name, region and local profile are already verified. Once approved access is available, the assistant can deploy and diagnose errors, or you can run:
 
 ```powershell
-.\tools\deploy.ps1 -Bucket YOUR-ACTUAL-BUCKET -Region us-east-1
+.\tools\deploy.ps1 -Bucket sam10-payroll-payslips-tabing -Region ap-southeast-2
 ```
 
 Wait for completion. Copy the printed `https://...execute-api...amazonaws.com` HTTP endpoint as your **API base URL**.
@@ -70,7 +74,7 @@ Save these six screenshots under `output/evidence/`:
 5. `05-s3-object.png`
 6. `06-pdf.png`
 
-If a deployed request returns 500: AWS search **Lambda** > **Functions** > function whose name starts with `sam10-payroll-api` > **Monitor** > **View CloudWatch logs** > latest stream. A missing bucket setting, denied PutObject, or incorrect region needs configuration/permission correction and a retry.
+If a deployed request returns 500: AWS search **Lambda** > **Functions** > function whose name starts with `gab-payroll-api` > **Monitor** > **View CloudWatch logs** > latest stream. A missing bucket setting, denied PutObject, or incorrect region needs configuration/permission correction and a retry.
 
 ## 5. Check GitHub access (you, 2 minutes)
 

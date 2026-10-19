@@ -15,7 +15,7 @@ Plan: user-approved Guide to Finish the Serverless Payroll Activity.
 - [x] Deployment configuration and packaging
 - [x] Local HTTP tests, PDF visual review, secret/configuration review
 - [x] README, evidence scripts, submission guidance
-- [ ] AWS deployment and live verification (requires credentials and bucket)
+- [ ] AWS deployment and live verification (credentials/bucket verified; additional deployment permissions required)
 - [x] GitHub publication: https://github.com/gab26g/serverless-payroll-api, main branch
 
 ## Verified results
@@ -31,3 +31,7 @@ Plan: user-approved Guide to Finish the Serverless Payroll Activity.
 - Ruling: create codex/serverless-payroll-api branch in the existing unborn repository. Publish initial code to the empty destination's main branch; no merge or force push is needed.
 - AWS preflight reports no usable credentials; bucket information still pending. Live upload, deployment and screenshots must not be claimed complete.
 - Published initial commit 5361f9f to origin/main successfully. Local branch codex/serverless-payroll-api tracks origin/main. Tracked, staged and history scans found no secret patterns.
+- Update: payroll-lab credentials now authenticate successfully as gab-payroll-deployer.
+- Update: user confirmed sam10-payroll-payslips-tabing; SDK verified its region as ap-southeast-2 and private/SSE-S3/ownership settings.
+- Console confirms AWSLambda_FullAccess and AmazonS3FullAccess; read-only CloudFormation ValidateTemplate and API Gateway GetApis probes are denied.
+- Ruling: default to the verified Sydney region and use service gab-payroll-api to avoid generic stack-name overlap in the shared account. Deployment remains pending approved permissions; see docs/DEPLOYMENT-STATUS.md.

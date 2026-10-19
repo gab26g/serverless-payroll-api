@@ -4,7 +4,7 @@ Plain PHP 8.2 + Bref 3 + AWS Lambda + API Gateway HTTP API. Employee and payroll
 
 ## Current status
 
-Implemented and locally tested. The Lambda package builds successfully. **AWS deployment and actual S3 upload are not yet verified:** school-account credentials and a real bucket are required. No deployed URL is claimed.
+Implemented and locally tested. The Lambda package builds successfully. The `payroll-lab` AWS profile is verified and the private bucket is `sam10-payroll-payslips-tabing` in Sydney (`ap-southeast-2`). **Live deployment is blocked by missing CloudFormation/API Gateway permissions**, and actual S3 upload remains unverified. See [deployment status and the message for the professor](docs/DEPLOYMENT-STATUS.md). No deployed URL is claimed.
 
 Repository: https://github.com/gab26g/serverless-payroll-api
 
@@ -66,10 +66,10 @@ The preview is saved to `output/pdf/payslip-1.pdf`. The three read endpoints and
 .\tools\configure-aws.ps1
 ```
 
-3. Deploy, replacing the example with the actual bucket name:
+3. After obtaining the professor-approved deployment permissions, deploy to the verified bucket:
 
 ```powershell
-.\tools\deploy.ps1 -Bucket YOUR-BUCKET-NAME -Region us-east-1
+.\tools\deploy.ps1 -Bucket sam10-payroll-payslips-tabing -Region ap-southeast-2
 ```
 
 The helper defaults to the `payroll-lab` credential profile, verifies the school AWS account using STS, runs the test suite, then deploys. Use `-Profile NAME` to choose another profile. Credentials in `AWS_ACCESS_KEY_ID`/`AWS_SECRET_ACCESS_KEY` environment variables take precedence in the AWS SDK; use a terminal configured for the intended school account. Temporary credentials also need `AWS_SESSION_TOKEN`.
@@ -82,8 +82,8 @@ Equivalent manual deployment, after configuring credentials:
 
 ```powershell
 $env:AWS_PROFILE = 'payroll-lab'
-$env:PAYSLIP_BUCKET = 'YOUR-BUCKET-NAME'
-npx.cmd serverless deploy --region us-east-1
+$env:PAYSLIP_BUCKET = 'sam10-payroll-payslips-tabing'
+npx.cmd serverless deploy --region ap-southeast-2
 ```
 
 Copy the HTTP API URL printed by Serverless. Use it as the base URL, without adding `/api` until the endpoint path.
@@ -100,7 +100,7 @@ The placeholder is for offline package checks only. Set the real bucket before d
 ## Live verification and evidence
 
 ```powershell
-.\tools\smoke-test.ps1 -BaseUrl https://YOUR-API-ID.execute-api.us-east-1.amazonaws.com -GeneratePdf
+.\tools\smoke-test.ps1 -BaseUrl https://YOUR-API-ID.execute-api.ap-southeast-2.amazonaws.com -GeneratePdf
 ```
 
 The script checks all four responses and stores their JSON in ignored `output/evidence/`. It does not capture screenshots. Verify `payslips/1.pdf` in S3 and capture the evidence listed in [FINISH.md](docs/FINISH.md).
