@@ -13,13 +13,19 @@ Date: 2026-10-19. Environment: Windows, PHP 8.2.12, Composer 2.9.5, Node 24.14.1
 | Local POST without AWS configuration | Returned 500 with generic JSON error, as intended |
 | PDF preview | One A4 page; extracted text checked; rendered PNG visually inspected for alignment and readability |
 | S3 network-boundary tests | Real SDK request contains PDF bytes, expected key, PDF content type, no public ACL; denial returns API failure |
-| Serverless package | Passed using illustrative bucket value; no AWS resources deployed |
+| Serverless package | Passed for the real Sydney bucket; portable CloudShell bundle checksum matched |
 | ZIP review | Contains entrypoint, source, CSVs, Composer autoload, AWS S3 compiled models; no Node tools, tests, output or credentials |
 | CloudFormation review | Bref PHP 8.2 layer on provided.al2023, timeout 28s, PutObject restricted to bucket/payslips/* |
 | Code review | Independent read-only review found no actionable defects |
 | Source secret-pattern scan | 28 initial untracked submission files scanned with no findings; staged scan repeated before commit |
 | Publication secret scans | 30 staged, tracked and history files/blobs; no pattern findings; ignore rules reviewed |
 | GitHub publication | Initial commit pushed to `gab26g/serverless-payroll-api`, branch `main` |
+| Live deployment | CloudShell/Serverless succeeded in 63 seconds; stack UPDATE_COMPLETE |
+| Live endpoints | All four returned HTTP 200 and success=true |
+| Live error cases | Invalid ID 400, absent record 404, wrong method 405, absent endpoint 404 |
+| Live S3 upload | PDF exists with application/pdf and SSE-S3; actual execution-role prefix policy verified |
+| Downloaded S3 PDF | One page; expected employee, dates and money values checked; rendering visually reviewed |
+| Submission evidence | Six evidence images, deployment screenshot, raw responses and downloaded PDF prepared |
 
 The compiled AWS manifest is `vendor/aws/aws-sdk-php/src/data/manifest.json.php`; a separate `manifest.json` is not required.
 
@@ -35,12 +41,11 @@ The compiled AWS manifest is `vendor/aws/aws-sdk-php/src/data/manifest.json.php`
 
 `npm audit` reports four high-severity package entries arising from a single inherited `braces` glob-pattern advisory (GHSA-vfj7-8cjw-p6xm) through micromatch, fast-glob and osls. No fix was available from the audit. These are development-only dependencies and not in the Lambda ZIP. Packaging uses fixed patterns from the checked-in configuration. This finding is documented, not represented as a clean npm audit.
 
-## Still requires live verification
+## Remaining user steps
 
-- Update: AWS STS preflight now authenticates the saved payroll-lab profile successfully.
-- Update: sam10-payroll-payslips-tabing is verified in ap-southeast-2 with private access, SSE-S3 and ACLs disabled.
-- Deployment access is blocked: read-only CloudFormation ValidateTemplate and API Gateway GetApis probes return access-denied errors. See DEPLOYMENT-STATUS.md.
-- No Lambda/API Gateway deployment, live API URL or successful live S3 upload is claimed.
-- Endpoint screenshots, S3 screenshot, downloaded live PDF screenshot and final course submission remain outstanding.
+- Review and personalize the reflection draft in SUBMISSION.md.
+- Submit the repository link, API URL, screenshots, issue/resolution and reflection through the course page and verify its receipt.
+
+The new student profile's provisioning limits were resolved operationally by deploying through the already-authorized shared console/CloudShell identity. No extra student-user permissions were granted. Live deployment details are in DEPLOYMENT-STATUS.md.
 
 The local Windows sandbox falsely reported some downloaded files as unreadable to PHP despite reads succeeding. Tests and packaging were repeated with approved file access and passed. This is an execution-environment limitation; no vendor code or dataset permissions were weakened to hide it.

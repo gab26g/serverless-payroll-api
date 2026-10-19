@@ -4,11 +4,17 @@ Plain PHP 8.2 + Bref 3 + AWS Lambda + API Gateway HTTP API. Employee and payroll
 
 ## Current status
 
-Implemented and locally tested. The Lambda package builds successfully. The `payroll-lab` AWS profile is verified and the private bucket is `sam10-payroll-payslips-tabing` in Sydney (`ap-southeast-2`). That new user's provisioning permissions are limited; the existing shared console login has deployment access and can use the [CloudShell deployment route](docs/CLOUDSHELL.md) without creating new keys or expanding user permissions. Live deployment and actual S3 upload remain unverified. See [deployment status](docs/DEPLOYMENT-STATUS.md). No deployed URL is claimed.
+**Deployed and verified on 2026-10-19.** All four live endpoints return HTTP 200. The generated PDF was uploaded to private S3 storage, downloaded, and checked for readable layout and correct employee/payroll figures.
+
+**API base URL:** https://51fjkdjyef.execute-api.ap-southeast-2.amazonaws.com
+
+Stack: `gab-payroll-api-dev`, Sydney (`ap-southeast-2`). Payslip bucket: `sam10-payroll-payslips-tabing`. Deployment used the existing shared console session through [CloudShell](docs/CLOUDSHELL.md), without creating shared keys or adding policies to the student user. See [verified deployment details](docs/DEPLOYMENT-STATUS.md).
 
 Repository: https://github.com/gab26g/serverless-payroll-api
 
 Start with [the remaining setup and submission steps](docs/FINISH.md). See [verification results and limits](docs/VERIFICATION.md).
+
+Live GET links: [employees](https://51fjkdjyef.execute-api.ap-southeast-2.amazonaws.com/api/employees), [payroll report](https://51fjkdjyef.execute-api.ap-southeast-2.amazonaws.com/api/reports/payroll), [payslip #1](https://51fjkdjyef.execute-api.ap-southeast-2.amazonaws.com/api/payslips/1).
 
 ## Endpoints
 
@@ -59,6 +65,8 @@ The preview is saved to `output/pdf/payslip-1.pdf`. The three read endpoints and
 
 ## AWS deployment
 
+The live deployment used CloudShell with the existing shared console identity. Follow [CLOUDSHELL.md](docs/CLOUDSHELL.md) for that route. The local commands below require a deployment profile with provisioning permissions; the student `payroll-lab` profile's Lambda/S3 policies alone do not supply them.
+
 1. Create a private general-purpose S3 bucket in the intended region. Use SSE-S3 encryption, disabled ACLs and enabled Block Public Access.
 2. Configure your school-approved deployment credentials outside Git. The optional helper prompts for hidden values and appends a new named profile to your user-level `.aws/credentials` file:
 
@@ -100,7 +108,7 @@ The placeholder is for offline package checks only. Set the real bucket before d
 ## Live verification and evidence
 
 ```powershell
-.\tools\smoke-test.ps1 -BaseUrl https://YOUR-API-ID.execute-api.ap-southeast-2.amazonaws.com -GeneratePdf
+.\tools\smoke-test.ps1 -BaseUrl https://51fjkdjyef.execute-api.ap-southeast-2.amazonaws.com -GeneratePdf
 ```
 
 The script checks all four responses and stores their JSON in ignored `output/evidence/`. It does not capture screenshots. Verify `payslips/1.pdf` in S3 and capture the evidence listed in [FINISH.md](docs/FINISH.md).

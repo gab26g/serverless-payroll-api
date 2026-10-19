@@ -1,97 +1,42 @@
-# Finish the activity
+# Final submission steps
 
-The application and local tests are ready. The source is published at https://github.com/gab26g/serverless-payroll-api. Credentials and the bucket are now verified. Start with the permission blocker in [DEPLOYMENT-STATUS.md](DEPLOYMENT-STATUS.md); steps 1-2 below are reference instructions for work already completed. Budget **25-45 minutes after deployment access is approved**, plus any wait for instructor permissions. Do not submit placeholder URLs or local-only results as deployed evidence.
+**The technical work is complete:** code is published, the API is deployed, all four endpoints pass live checks, and the private S3 PDF is verified. Screenshots and a submission draft are prepared. Allow **5-10 minutes** to review, personalize the reflection, and submit through your course page.
 
-## 1. Create the bucket (you, 5-10 minutes)
+## 1. Review the submission text
 
-**Already complete:** `sam10-payroll-payslips-tabing`, **Asia Pacific (Sydney), `ap-southeast-2`**. No second bucket is needed.
+Open `docs/SUBMISSION.md` in this project or on GitHub:
 
-1. Sign in at https://408852558600.signin.aws.amazon.com/console using the assigned school login.
-2. Choose **Asia Pacific (Sydney), ap-southeast-2** in the upper-right Region menu, matching the existing bucket.
-3. In the top search bar, type **S3**, then select **S3**.
-4. Click **General purpose buckets** > **Create bucket**.
-5. Use a globally unique lowercase name, for example `sam10-payroll-payslips-20261019`, adding digits if already taken.
-6. Select the same region. Keep **ACLs disabled**, **Block all public access** enabled, and **SSE-S3** encryption.
-7. Click **Create bucket**. Record the exact name and region; these are safe to share with the coding assistant.
+https://github.com/gab26g/serverless-payroll-api/blob/main/docs/SUBMISSION.md
 
-## 2. Configure credentials privately (you, 10-15 minutes)
+It contains the real repository URL, deployed API URL, successful tests, and the actual issue/resolution. Review the reflection draft and edit it so it describes what you personally learned.
 
-**Already complete:** the `payroll-lab` profile authenticates successfully as `gab-payroll-deployer`. Do not create another key or rerun the helper for the same profile.
+## 2. Find your prepared files
 
-1. In AWS, click your username/account menu at the upper right > **Security credentials**.
-2. Scroll to **Access keys** > **Create access key** and follow the command-line use-case prompts. If blocked, request the approved credentials or deployment method from your instructor; keep existing keys.
-3. Open File Explorer and navigate to this project folder, `Documents\ChatGPT\AWS` under your OneDrive Desktop folder.
-4. Right-click an empty area of the folder > **Open in Terminal**. If unavailable, click the File Explorer address bar, type `powershell`, and press Enter.
-5. Run `.\tools\configure-aws.ps1`. Enter the key ID and secret at its hidden prompts. Enter a session token only for temporary credentials.
-6. If PowerShell blocks scripts, use a temporary policy for this terminal only: `Set-ExecutionPolicy -Scope Process Bypass`, then rerun the helper. Close the terminal afterward to discard that policy setting.
+Open File Explorer and paste this into its address bar:
 
-Credentials are written outside the repository, under your user profile. Do not send them in chat, put them in the project, or photograph the AWS key-retrieval page.
-
-## 3. Deploy (assistant or you, 10-20 minutes)
-
-First obtain the professor-approved deployment access described in DEPLOYMENT-STATUS.md. The bucket name, region and local profile are already verified. Once approved access is available, the assistant can deploy and diagnose errors, or you can run:
-
-```powershell
-.\tools\deploy.ps1 -Bucket sam10-payroll-payslips-tabing -Region ap-southeast-2
+```text
+C:\Users\Gab\OneDrive - auf.edu.ph\Desktop\Documents\ChatGPT\AWS\output
 ```
 
-Wait for completion. Copy the printed `https://...execute-api...amazonaws.com` HTTP endpoint as your **API base URL**.
+- `payroll-submission.zip`: submission text, six required screenshots, successful deployment screenshot, raw live responses, and the actual downloaded PDF. It contains no AWS credentials.
+- `evidence`: individual screenshots and JSON response files, if your course page wants separate uploads.
+- `pdf/payslip-1-live.pdf`: the actual PDF downloaded from S3.
 
-If AWS reports **AccessDenied**, copy only the action name and non-secret error text. Your instructor may need to grant the denied action or supply an execution role. Do not assume a Lambda upload policy also grants the IAM user permission to deploy.
+The packet is a starting point; if your course page requires a single PDF/Word document rather than a ZIP, combine the reviewed submission text and six screenshots into its required format. Do not upload the CloudShell deployment ZIP as your assignment evidence.
 
-## 4. Test and capture evidence (shared, 15-20 minutes)
+## 3. Submit on the assignment page
 
-Run:
+1. Open your course and this **Serverless Payroll Management API Using PHP and AWS Lambda** assignment.
+2. Click **Submit Assignment**.
+3. Paste the repository URL and deployed API base URL from SUBMISSION.md into the text/URL fields offered by the course page.
+4. Upload `payroll-submission.zip` if ZIP uploads are accepted. Otherwise upload the six screenshots individually and paste the reviewed issue explanation and personalized reflection into the submission text area.
+5. Click the final **Submit Assignment** or **Submit** button.
+6. Confirm the page shows **Submitted** or a submission receipt.
 
-```powershell
-.\tools\smoke-test.ps1 -BaseUrl https://YOUR-ACTUAL-API-URL -GeneratePdf
-```
+Repository: https://github.com/gab26g/serverless-payroll-api
 
-For easy screenshots of the GET endpoints, paste each complete URL into a browser address bar:
+API base URL: https://51fjkdjyef.execute-api.ap-southeast-2.amazonaws.com
 
-- `BASE-URL/api/employees`
-- `BASE-URL/api/reports/payroll`
-- `BASE-URL/api/payslips/1`
+## 4. Keep the deployment available for grading
 
-For the POST endpoint, run this in the terminal and capture both the command and output:
-
-```powershell
-curl.exe -i -X POST "BASE-URL/api/payslips/1/generate"
-```
-
-Replace `BASE-URL` with the real base URL everywhere. Press **Windows + Shift + S** for each screenshot, select the relevant area, then click the screenshot notification and save it. Capture the browser URL or terminal command and successful JSON. Keep credential screens out of screenshots.
-
-Next, open AWS > **S3** > your bucket > **Objects** > **payslips/** > **1.pdf**. Capture its existence. Click **Download**, open the PDF, and capture its readable contents. The ordinary object URL may return AccessDenied in an unsigned browser because the bucket is private; that is expected.
-
-Expected payroll #1: employee **Deniz Fischer**, employee ID **319**, gross **14,131.54**, deductions **12,626.36**, net **1,505.18**. The source dates are **2023-10-14** and **2023-05-06**; they are preserved, not corrected.
-
-Save these six screenshots under `output/evidence/`:
-
-1. `01-employees.png`
-2. `02-payroll-report.png`
-3. `03-payslip.png`
-4. `04-generate.png`
-5. `05-s3-object.png`
-6. `06-pdf.png`
-
-If a deployed request returns 500: AWS search **Lambda** > **Functions** > function whose name starts with `gab-payroll-api` > **Monitor** > **View CloudWatch logs** > latest stream. A missing bucket setting, denied PutObject, or incorrect region needs configuration/permission correction and a retry.
-
-## 5. Check GitHub access (you, 2 minutes)
-
-Publication is complete: https://github.com/gab26g/serverless-payroll-api, branch `main`.
-
-Open that page and verify it shows `src/`, `index.php`, `serverless.yml`, both CSVs, README, and lockfiles. If private, ensure the instructor can access it. No second repository or new upload is needed.
-
-## 6. Complete and submit (you, 5-10 minutes)
-
-Open `docs/SUBMISSION.md`. Replace the pending URLs, review the actual issue explanation, and write your own reflection using its prompts.
-
-On the course assignment page:
-
-1. Click **Submit Assignment**.
-2. Choose the text/URL or file-upload option offered by the course page.
-3. Provide the repository URL, deployed API base URL, six screenshots, issue explanation and reflection. If only one upload is allowed, place the text and screenshots into one document.
-4. Click the final **Submit Assignment** or **Submit** button.
-5. Confirm the page shows **Submitted** or a submission receipt.
-
-Keep AWS resources available until grading. After grading, follow the instructor's cleanup instructions; removing the Serverless stack does not remove the separately created payslip bucket or its objects.
+Keep the Lambda/API Gateway stack and S3 bucket intact until grading is complete. The ordinary S3 object URL is private; verify the PDF through authenticated S3 access. Follow the professor's cleanup instructions after grading. Removing the stack does not remove the separately created payslip bucket.

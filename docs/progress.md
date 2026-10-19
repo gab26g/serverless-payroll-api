@@ -15,7 +15,7 @@ Plan: user-approved Guide to Finish the Serverless Payroll Activity.
 - [x] Deployment configuration and packaging
 - [x] Local HTTP tests, PDF visual review, secret/configuration review
 - [x] README, evidence scripts, submission guidance
-- [ ] AWS deployment and live verification (credentials/bucket verified; additional deployment permissions required)
+- [x] AWS deployment and live verification through the existing CloudShell identity
 - [x] GitHub publication: https://github.com/gab26g/serverless-payroll-api, main branch
 
 ## Verified results
@@ -39,3 +39,7 @@ Plan: user-approved Guide to Finish the Serverless Payroll Activity.
 - Ruling: deploy the locally built, validated package through the existing CloudShell session, avoiding new keys or new policies on the student user. CloudShell has Node/npm but no PHP/Composer; a portable prepackaged bundle is provided by tools/prepare-cloudshell.py.
 - CloudShell bundle uploaded successfully and SHA256 matched: 649c5086e08dce9b2b1d11b817d42f6aa801283e7b7ebcdd2e0803e63644b3ec.
 - CloudShell npm ci installed 144 packages; OSS Serverless 4.4.0 runs. AWS ValidateTemplate succeeded and reports CAPABILITY_NAMED_IAM. Resource creation awaits action-time browser confirmation for the Lambda execution role and public HTTP API.
+- User confirmed deployment of the concrete stack and restricted execution role. Serverless succeeded in 63 seconds; stack is UPDATE_COMPLETE and Lambda is Active.
+- Live API: https://51fjkdjyef.execute-api.ap-southeast-2.amazonaws.com. All four endpoints pass, along with live 400/404/405/404 cases.
+- Actual S3 PDF downloaded, text checked, rendered and visually inspected. Live restricted role policy verified. Six evidence images and successful deployment screenshot captured.
+- Remaining work is student reflection review/personalization and course-page submission; technical implementation/deployment is complete.

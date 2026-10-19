@@ -1,43 +1,31 @@
-# Deployment status - 2026-10-19
+# Deployment complete - 2026-10-19
 
-## Verified
-
-- GitHub: https://github.com/gab26g/serverless-payroll-api
-- Local AWS profile: `payroll-lab`, authenticated successfully as `gab-payroll-deployer` in the school account.
-- Payslip bucket: `sam10-payroll-payslips-tabing`.
-- Bucket region: **Asia Pacific (Sydney), `ap-southeast-2`**.
-- All four S3 Block Public Access settings are enabled; bucket ownership is BucketOwnerEnforced (ACLs disabled); default encryption is SSE-S3.
-- Console confirms `AWSLambda_FullAccess` and `AmazonS3FullAccess` are attached to the deployment user.
-- Service name is `gab-payroll-api` to distinguish this project in the shared account; development stack name will be `gab-payroll-api-dev`.
-
-## Current blocker
-
-**Alternative now verified:** the shared console login `lambda` has AdministratorAccess attached and CloudShell authenticates as that existing identity. Its read-only CloudFormation check confirms `gab-payroll-api-dev` does not exist in Sydney. Use [CLOUDSHELL.md](CLOUDSHELL.md) to deploy the prepared package through the existing console access, without adding policies to the new student user. The errors below apply to `gab-payroll-deployer`, not the shared console session.
-
-**Preparation complete:** the portable bundle was uploaded and its SHA256 verified. OSS Serverless 4.4.0 is installed in this project's CloudShell directory. AWS template validation succeeded and reports CAPABILITY_NAMED_IAM. No stack resources have been created yet; the next action creates the named execution role and public API and requires action-time confirmation under the browser tool's security-access policy.
-
-Read-only API probes returned:
-
-| Action | Result |
+| Item | Verified value |
 |---|---|
-| `cloudformation:ValidateTemplate` | `AccessDenied` |
-| API Gateway V2 `GetApis` (`apigateway:GET /apis`) | `AccessDeniedException` |
-| `iam:ListAttachedUserPolicies` / `iam:ListUserPolicies` | `AccessDenied` (console was used to verify attached policy names instead) |
+| Repository | https://github.com/gab26g/serverless-payroll-api |
+| API base URL | https://51fjkdjyef.execute-api.ap-southeast-2.amazonaws.com |
+| Region | Asia Pacific (Sydney), `ap-southeast-2` |
+| CloudFormation stack | `gab-payroll-api-dev`, `UPDATE_COMPLETE` |
+| Lambda | `gab-payroll-api-dev-web`, Active |
+| Runtime | Bref PHP 8.2 FPM, `provided.al2023` |
+| Execution role | `gab-payroll-api-dev-ap-southeast-2-lambdaRole` |
+| Payslip bucket | `sam10-payroll-payslips-tabing` |
+| Generated PDF | `payslips/1.pdf`, application/pdf, SSE-S3 |
 
-The current deployment method uses CloudFormation to provision Lambda, API Gateway, CloudWatch logs, a deployment bucket and a Lambda execution role. Lambda access and S3 access alone do not grant the complete set of deployment permissions. No deployment has been attempted or successful live upload claimed at this stage.
+## Deployment method
 
-## Message to ask the professor
+The new `payroll-lab` profile authenticated correctly but lacked CloudFormation/API Gateway provisioning permissions. The existing shared console login `lambda` already had deployment access. CloudShell used that console identity without requiring another shared access key or extra policies on the student user.
 
-> My IAM user `gab-payroll-deployer` has `AWSLambda_FullAccess` and `AmazonS3FullAccess`, and its credentials work. My PHP/Bref project uses the Serverless CLI. Read-only preflight checks in Sydney (`ap-southeast-2`) are denied for `cloudformation:ValidateTemplate` and API Gateway V2 `GetApis`. What deployment policy or existing deployment role should we use? The workflow also needs permission to create/pass the Lambda execution role and configure CloudWatch logs. Can you provide the approved permissions or the intended alternative deployment method for this lab?
+The PHP application was packaged locally and uploaded as a portable bundle. Its SHA256 was checked after upload. CloudShell installed OSS Serverless 4.4.0, validated the template (CAPABILITY_NAMED_IAM), then deployed the prepared package after the user confirmed the concrete resource/role creation. Serverless reported success in 63 seconds. See [CLOUDSHELL.md](CLOUDSHELL.md) for the workflow.
 
-Do not attach AdministratorAccess or change the professor's shared roles to work around these errors. A supplied execution role can avoid creating a new Lambda role, but does not by itself supply the caller's CloudFormation and API Gateway permissions.
+## Live verification
 
-## After approved access is available
+- All four endpoints returned HTTP 200 with success=true.
+- Employee count and payroll totals match the original CSVs.
+- Invalid ID, missing record, wrong method and unknown route return expected JSON errors (400/404/405/404).
+- S3 object exists, uses content type application/pdf and SSE-S3, and was downloaded and rendered for text/layout checks.
+- Payroll #1 contains Deniz Fischer (employee #319), gross 14,131.54, deductions 12,626.36 and net 1,505.18.
+- The actual role policy restricts S3 uploads to `arn:aws:s3:::sam10-payroll-payslips-tabing/payslips/*` and only permits application logging for this project's log groups.
+- Bucket public access remains blocked and ACLs remain disabled.
 
-Ask the coding assistant to recheck permissions and deploy. The configured command is:
-
-```powershell
-.\tools\deploy.ps1 -Bucket sam10-payroll-payslips-tabing -Region ap-southeast-2
-```
-
-Then test all four endpoints, verify/download the real PDF from S3, capture the six screenshots, complete the reflection and submit. No access keys need to be sent in chat.
+Screenshots, raw responses and the downloaded PDF are available in local `output/`; generated artifacts are intentionally excluded from Git. The remaining student steps are reviewing/personalizing the reflection and submitting the prepared materials on the course page.
