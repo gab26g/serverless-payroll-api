@@ -1,0 +1,12 @@
+{
+  "name": "serverless-payroll-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "OSS Serverless deployment tooling for the PHP payroll lab",
+  "scripts": {
+    "deploy": "serverless deploy",
+    "package": "serverless package",
+    "test": "php tests/run.php"
+  },
+  "devDependencies": { "osls": "^4.0.0" }
+}

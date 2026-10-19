@@ -1,0 +1,41 @@
+service: sam10-payroll-api
+frameworkVersion: '4'
+configValidationMode: error
+
+provider:
+  name: aws
+  region: ${opt:region, 'us-east-1'}
+  stage: ${opt:stage, 'dev'}
+  architecture: x86_64
+  memorySize: 512
+  logRetentionInDays: 7
+  environment:
+    APP_ENV: prod
+    PAYSLIP_BUCKET: ${env:PAYSLIP_BUCKET}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action: s3:PutObject
+          Resource: arn:aws:s3:::${env:PAYSLIP_BUCKET}/payslips/*
+
+functions:
+  web:
+    handler: index.php
+    runtime: php-82-fpm
+    timeout: 28
+    events:
+      - httpApi: '*'
+
+package:
+  patterns:
+    - '!**'
+    - index.php
+    - 'src/**'
+    - 'data/*.csv'
+    - 'vendor/**'
+    - composer.json
+    - composer.lock
+
+plugins:
+  - ./vendor/bref/bref

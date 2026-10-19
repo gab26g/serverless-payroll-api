@@ -1,0 +1,14 @@
+/vendor/
+/node_modules/
+/.serverless/
+/.superpowers/
+/output/
+/tmp/
+/.env
+/.env.*
+!/.env.example
+/.aws/
+*credentials*.csv
+*.pem
+*.key
+/deployment.local.json
