@@ -12,6 +12,10 @@
 
 ## Current blocker
 
+**Alternative now verified:** the shared console login `lambda` has AdministratorAccess attached and CloudShell authenticates as that existing identity. Its read-only CloudFormation check confirms `gab-payroll-api-dev` does not exist in Sydney. Use [CLOUDSHELL.md](CLOUDSHELL.md) to deploy the prepared package through the existing console access, without adding policies to the new student user. The errors below apply to `gab-payroll-deployer`, not the shared console session.
+
+**Preparation complete:** the portable bundle was uploaded and its SHA256 verified. OSS Serverless 4.4.0 is installed in this project's CloudShell directory. AWS template validation succeeded and reports CAPABILITY_NAMED_IAM. No stack resources have been created yet; the next action creates the named execution role and public API and requires action-time confirmation under the browser tool's security-access policy.
+
 Read-only API probes returned:
 
 | Action | Result |

@@ -4,7 +4,7 @@ Plain PHP 8.2 + Bref 3 + AWS Lambda + API Gateway HTTP API. Employee and payroll
 
 ## Current status
 
-Implemented and locally tested. The Lambda package builds successfully. The `payroll-lab` AWS profile is verified and the private bucket is `sam10-payroll-payslips-tabing` in Sydney (`ap-southeast-2`). **Live deployment is blocked by missing CloudFormation/API Gateway permissions**, and actual S3 upload remains unverified. See [deployment status and the message for the professor](docs/DEPLOYMENT-STATUS.md). No deployed URL is claimed.
+Implemented and locally tested. The Lambda package builds successfully. The `payroll-lab` AWS profile is verified and the private bucket is `sam10-payroll-payslips-tabing` in Sydney (`ap-southeast-2`). That new user's provisioning permissions are limited; the existing shared console login has deployment access and can use the [CloudShell deployment route](docs/CLOUDSHELL.md) without creating new keys or expanding user permissions. Live deployment and actual S3 upload remain unverified. See [deployment status](docs/DEPLOYMENT-STATUS.md). No deployed URL is claimed.
 
 Repository: https://github.com/gab26g/serverless-payroll-api
 
